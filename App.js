@@ -1,114 +1,61 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
   StatusBar,
+  FlatList,
+  Text, View
 } from 'react-native';
+import { API_URL } from 'react-native-dotenv'
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const dateTransform = (date) => {
+  const splitDate = date.split(' ');
+  const chunk = splitDate[0].split('-');
+  const months = ["Januari", "Februari", "Mare", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+  const day = chunk[2];
+  const month = chunk[1];
+  const monthName = months[month - 1];
+  const year = chunk[0];
 
-const App: () => React$Node = () => {
+  return `${day} ${monthName} ${year}`;
+}
+
+const renderItem = ({item}) => {
+  const { sender_bank, beneficiary_bank, beneficiary_name, status, amount, completed_at } = item;
+  const completedAt = dateTransform(completed_at)
+  return (
+    <View style={{ backgroundColor: '#ffffff', marginBottom: 10, marginHorizontal: 10, borderRadius: 5, padding: 20 }}>
+      <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{sender_bank.toUpperCase()} - {beneficiary_bank.toUpperCase()}</Text>
+      <Text style={{ fontSize: 18 }}>- {beneficiary_name.toUpperCase()}</Text>
+      <Text style={{ fontSize: 18 }}>{amount} . {completedAt}</Text>
+    </View>
+  )
+}
+
+const fetchData = async (setTransactions) => {
+  const response = await fetch(API_URL);
+  const result = await response.json();
+  const data = Object.values(result)
+
+  setTransactions(data);
+}
+
+const App = () => {
+  const [transactions, setTransactions] = useState([])
+  useEffect(() => {
+    fetchData(setTransactions)
+  }, [])
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
+      <SafeAreaView style={{ flex:1, backgroundColor: '#f7f7f7' }}>
+        <FlatList
+          data={transactions}
+          renderItem={renderItem}
+        />
       </SafeAreaView>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
 export default App;
