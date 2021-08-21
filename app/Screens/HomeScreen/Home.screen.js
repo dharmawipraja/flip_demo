@@ -1,31 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
-
-import styles from './Home.styles';
-import { transformDate } from '../../Utils/date.utils';
-
-const renderItem = ({ item }) => {
-  const {
-    sender_bank,
-    beneficiary_bank,
-    beneficiary_name,
-    amount,
-    completed_at
-  } = item;
-  const completedAt = transformDate(completed_at);
-  return (
-    <View style={styles.itemContainer}>
-      <Text style={styles.title}>
-        {sender_bank.toUpperCase()} - {beneficiary_bank.toUpperCase()}
-      </Text>
-      <Text style={styles.subtitle}>- {beneficiary_name.toUpperCase()}</Text>
-      <Text style={styles.subtitle}>
-        {amount} . {completedAt}
-      </Text>
-    </View>
-  );
-};
+import Card from '../../Components/Card/Card.component';
 
 const fetchData = async (setTransactions) => {
   const response = await fetch(API_URL);
@@ -41,7 +17,12 @@ const HomeScreen = () => {
     fetchData(setTransactions);
   }, []);
 
-  return <FlatList data={transactions} renderItem={renderItem} />;
+  return (
+    <FlatList
+      data={transactions}
+      renderItem={({ item }) => <Card item={item} />}
+    />
+  );
 };
 
 export default HomeScreen;
