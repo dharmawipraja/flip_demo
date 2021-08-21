@@ -5,10 +5,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#ffffff',
-    marginBottom: 10,
-    marginHorizontal: 10,
+    marginTop: 10,
     borderRadius: 5,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    height: '100%'
   },
   contentContainer: {
     flex: 1,

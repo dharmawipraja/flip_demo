@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { View, SafeAreaView } from 'react-native';
 import { FlatList } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { API_URL } from 'react-native-dotenv';
+
 import Card from '../../Components/Card/Card.component';
+import SearchBar from '../../Components/SearchBar/SearchBar.component';
+import styles from './Home.styles';
 
 const fetchData = async (setTransactions) => {
   const response = await fetch(API_URL);
@@ -23,8 +26,12 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.appContainer}>
+      <View style={styles.searchContainer}>
+        <SearchBar />
+      </View>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={transactions}
         renderItem={({ item }) => (
           <Card
@@ -32,6 +39,7 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => onTransactionPressed(navigation, item.id)}
           />
         )}
+        contentContainerStyle={styles.contentContainer}
       />
     </SafeAreaView>
   );
