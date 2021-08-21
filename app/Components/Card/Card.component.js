@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 import styles from './Card.styles';
 import { transformDate } from '../../Utils/date.utils';
 
-const Card = (props) => {
+const Card = ({ item, onPress }) => {
   const {
     sender_bank,
     beneficiary_bank,
@@ -12,13 +12,13 @@ const Card = (props) => {
     amount,
     completed_at,
     status
-  } = props.item;
+  } = item;
   const completedAt = transformDate(completed_at);
   const amountCurrency = `Rp${amount.toLocaleString('id-ID')}`;
   const isTransactionPending = status === 'PENDING';
   const statusText = isTransactionPending ? 'Pengecekan' : 'Berhasil';
   return (
-    <View style={styles.cardContainer}>
+    <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
       <View style={styles.colorStatus(isTransactionPending)} />
       <View style={styles.contentContainer}>
         <Text style={styles.title}>
@@ -34,7 +34,7 @@ const Card = (props) => {
           {statusText}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
