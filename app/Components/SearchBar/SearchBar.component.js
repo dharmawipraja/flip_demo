@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import styles from './SearchBar.styles';
 
-const SearchBar = () => {
+const SearchBar = ({ sortButtonPress }) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer} />
@@ -12,7 +12,7 @@ const SearchBar = () => {
         style={styles.formField}
         placeholderTextColor={'#888888'}
       />
-      <TouchableOpacity style={styles.sortContainer}>
+      <TouchableOpacity onPress={sortButtonPress} style={styles.sortContainer}>
         <Text style={styles.sortLabel}>URUTKAN</Text>
       </TouchableOpacity>
     </View>

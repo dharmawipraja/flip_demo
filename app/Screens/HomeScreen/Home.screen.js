@@ -5,6 +5,7 @@ import { API_URL } from 'react-native-dotenv';
 
 import Card from '../../Components/Card/Card.component';
 import SearchBar from '../../Components/SearchBar/SearchBar.component';
+import SortModal from '../../Components/SortModal/SortModal.component';
 import styles from './Home.styles';
 
 const fetchData = async (setTransactions) => {
@@ -21,6 +22,7 @@ const onTransactionPressed = (navigation, id) => {
 
 const HomeScreen = ({ navigation }) => {
   const [transactions, setTransactions] = useState([]);
+  const [shouldShowSortModal, setShouldShowSortModal] = useState(false);
   useEffect(() => {
     fetchData(setTransactions);
   }, []);
@@ -28,7 +30,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.appContainer}>
       <View style={styles.searchContainer}>
-        <SearchBar />
+        <SearchBar sortButtonPress={() => setShouldShowSortModal(true)} />
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -40,6 +42,10 @@ const HomeScreen = ({ navigation }) => {
           />
         )}
         contentContainerStyle={styles.contentContainer}
+      />
+      <SortModal
+        modalVisible={shouldShowSortModal}
+        onBackDropPress={() => setShouldShowSortModal(false)}
       />
     </SafeAreaView>
   );
