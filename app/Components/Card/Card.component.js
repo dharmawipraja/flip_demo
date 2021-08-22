@@ -3,6 +3,29 @@ import { Text, View, TouchableOpacity } from 'react-native';
 
 import styles from './Card.styles';
 import { transformDate } from '../../Utils/date.utils';
+import Icon from '../Icon/Icon.component';
+
+const _renderBank = (sender_bank, beneficiary_bank) => (
+  <View style={styles.row}>
+    <Text style={styles.title}>{sender_bank.toUpperCase()}</Text>
+    <Icon code="arrow-right" />
+    <Text style={styles.title}>{beneficiary_bank.toUpperCase()}</Text>
+  </View>
+);
+
+const _renderAmount = (amountCurrency, completedAt) => (
+  <View style={styles.row}>
+    <Text style={styles.subtitle}>{amountCurrency}</Text>
+    <Icon code="circle" size={10} customStyle={styles.dotIcon} />
+    <Text style={styles.subtitle}>{completedAt}</Text>
+  </View>
+);
+
+const _renderStatus = (statusText, isTransactionPending) => (
+  <View style={styles.statusContainer}>
+    <Text style={styles.statusText(isTransactionPending)}>{statusText}</Text>
+  </View>
+);
 
 const Card = ({ item, onPress }) => {
   const {
@@ -21,19 +44,11 @@ const Card = ({ item, onPress }) => {
     <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
       <View style={styles.colorStatus(isTransactionPending)} />
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>
-          {sender_bank.toUpperCase()} - {beneficiary_bank.toUpperCase()}
-        </Text>
+        {_renderBank(sender_bank, beneficiary_bank)}
         <Text style={styles.subtitle}>- {beneficiary_name.toUpperCase()}</Text>
-        <Text style={styles.subtitle}>
-          {amountCurrency} . {completedAt}
-        </Text>
+        {_renderAmount(amountCurrency, completedAt)}
       </View>
-      <View style={styles.statusContainer}>
-        <Text style={styles.statusText(isTransactionPending)}>
-          {statusText}
-        </Text>
-      </View>
+      {_renderStatus(statusText, isTransactionPending)}
     </TouchableOpacity>
   );
 };

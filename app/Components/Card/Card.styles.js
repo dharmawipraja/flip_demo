@@ -44,7 +44,14 @@ const styles = StyleSheet.create({
     borderColor: isPending ? 'orange' : 'green',
     borderRadius: 5,
     overflow: 'hidden'
-  })
+  }),
+  row: {
+    flexDirection: 'row'
+  },
+  dotIcon: {
+    marginHorizontal: 5,
+    marginTop: 5
+  }
 });
 
 export default styles;

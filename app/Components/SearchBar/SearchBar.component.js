@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
+import Icon from '../Icon/Icon.component';
 import styles from './SearchBar.styles';
 
 const SearchBar = ({ sortButtonPress }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.iconContainer} />
+      <Icon code="search" />
       <TextInput
         placeholder="Cari nama, bank, atau nominal"
         style={styles.formField}

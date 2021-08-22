@@ -11,7 +11,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     overflow: 'hidden'
   },
-  iconContainer: { flex: 0.1 },
+  iconContainer: {
+    flex: 0.1
+  },
   formField: {
     flex: 1,
     fontSize: 16,
