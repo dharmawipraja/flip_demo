@@ -2,47 +2,65 @@ import React, { useEffect, useState } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { FlatList } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Card from '../../Components/Card/Card.component';
 import SearchBar from '../../Components/SearchBar/SearchBar.component';
 import SortModal from '../../Components/SortModal/SortModal.component';
+import { addTransactions } from '../../Reducer/Transactions.slice';
 import styles from './Home.styles';
 
-const fetchData = async (setTransactions) => {
+const _fetchData = async (dispatch, setLoading) => {
   const response = await fetch(API_URL);
   const result = await response.json();
   const data = Object.values(result);
 
-  setTransactions(data);
+  await dispatch(addTransactions({ transactions: data }));
+  setLoading(false);
 };
 
-const onTransactionPressed = (navigation, id) => {
+const _onTransactionPressed = (navigation, id) => {
   navigation.navigate('Transaction Detail', { transactionId: id });
 };
 
 const HomeScreen = ({ navigation }) => {
-  const [transactions, setTransactions] = useState([]);
   const [shouldShowSortModal, setShouldShowSortModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const transactions = useSelector((state) => state.transactions.list);
+  const searchQuery = useSelector((state) => state.search.query);
+  const sortMethod = useSelector((state) => state.sort.sortMethod);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    fetchData(setTransactions);
-  }, []);
+    _fetchData(dispatch, setLoading);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (searchQuery || sortMethod) {
+      console.log('searchQuery', searchQuery);
+      console.log('sortMethod', sortMethod);
+    }
+  }, [searchQuery, sortMethod]);
 
   return (
     <SafeAreaView style={styles.appContainer}>
       <View style={styles.searchContainer}>
         <SearchBar sortButtonPress={() => setShouldShowSortModal(true)} />
       </View>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={transactions}
-        renderItem={({ item }) => (
-          <Card
-            item={item}
-            onPress={() => onTransactionPressed(navigation, item.id)}
-          />
-        )}
-        contentContainerStyle={styles.contentContainer}
-      />
+      {!loading && (
+        <FlatList
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          data={transactions}
+          renderItem={({ item }) => (
+            <Card
+              item={item}
+              onPress={() => _onTransactionPressed(navigation, item.id)}
+            />
+          )}
+          contentContainerStyle={styles.contentContainer}
+        />
+      )}
       <SortModal
         modalVisible={shouldShowSortModal}
         onBackDropPress={() => setShouldShowSortModal(false)}
