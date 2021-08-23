@@ -8,6 +8,7 @@ import Card from '../../Components/Card/Card.component';
 import SearchBar from '../../Components/SearchBar/SearchBar.component';
 import SortModal from '../../Components/SortModal/SortModal.component';
 import { addTransactions } from '../../Reducer/Transactions.slice';
+import { sort } from '../../Utils/sort.utils';
 import styles from './Home.styles';
 
 const _fetchData = async (dispatch, setLoading) => {
@@ -25,6 +26,7 @@ const _onTransactionPressed = (navigation, id) => {
 
 const HomeScreen = ({ navigation }) => {
   const [shouldShowSortModal, setShouldShowSortModal] = useState(false);
+  const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const transactions = useSelector((state) => state.transactions.list);
   const searchQuery = useSelector((state) => state.search.query);
@@ -37,10 +39,12 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (searchQuery || sortMethod) {
-      console.log('searchQuery', searchQuery);
-      console.log('sortMethod', sortMethod);
+      const filteredData = sort(transactions, sortMethod);
+      setFilteredTransactions(filteredData);
     }
-  }, [searchQuery, sortMethod]);
+  }, [transactions, searchQuery, sortMethod]);
+
+  const data = sortMethod === 'default' ? transactions : filteredTransactions;
 
   return (
     <SafeAreaView style={styles.appContainer}>
@@ -51,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
         <FlatList
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
-          data={transactions}
+          data={data}
           renderItem={({ item }) => (
             <Card
               item={item}

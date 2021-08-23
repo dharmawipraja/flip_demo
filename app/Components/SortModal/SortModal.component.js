@@ -12,7 +12,7 @@ import styles from './SortModal.styles';
 
 const SortModal = ({ modalVisible, onBackDropPress }) => {
   const radioProps = [
-    { label: 'URUTKAN', value: '' },
+    { label: 'URUTKAN', value: 'default' },
     { label: 'Nama A-Z', value: 'sortByNameAsc' },
     { label: 'Nama Z-A', value: 'sortByNameDesc' },
     { label: 'Tanggal Terbaru', value: 'sortByNewest' },
