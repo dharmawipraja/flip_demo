@@ -33,10 +33,10 @@ const Card = ({ item, onPress }) => {
     beneficiary_bank,
     beneficiary_name,
     amount,
-    completed_at,
+    created_at,
     status
   } = item;
-  const completedAt = transformDate(completed_at);
+  const createdAt = transformDate(created_at);
   const amountCurrency = `Rp${amount.toLocaleString('id-ID')}`;
   const isTransactionPending = status === 'PENDING';
   const statusText = isTransactionPending ? 'Pengecekan' : 'Berhasil';
@@ -46,7 +46,7 @@ const Card = ({ item, onPress }) => {
       <View style={styles.contentContainer}>
         {_renderBank(sender_bank, beneficiary_bank)}
         <Text style={styles.subtitle}>- {beneficiary_name.toUpperCase()}</Text>
-        {_renderAmount(amountCurrency, completedAt)}
+        {_renderAmount(amountCurrency, createdAt)}
       </View>
       {_renderStatus(statusText, isTransactionPending)}
     </TouchableOpacity>

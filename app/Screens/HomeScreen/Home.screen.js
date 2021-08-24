@@ -36,11 +36,10 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     _fetchData(dispatch, setLoading);
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
-    let filteredData = [];
-    filteredData = sort(transactions, sortMethod);
+    let filteredData = sort(transactions, sortMethod);
 
     if (searchQuery) {
       const dataFound = searchData(filteredData, searchQuery);
