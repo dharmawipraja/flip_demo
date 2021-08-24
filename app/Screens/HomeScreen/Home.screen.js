@@ -8,6 +8,7 @@ import Card from '../../Components/Card/Card.component';
 import SearchBar from '../../Components/SearchBar/SearchBar.component';
 import SortModal from '../../Components/SortModal/SortModal.component';
 import { addTransactions } from '../../Reducer/Transactions.slice';
+import { searchData } from '../../Utils/search.utils';
 import { sort } from '../../Utils/sort.utils';
 import styles from './Home.styles';
 
@@ -38,13 +39,16 @@ const HomeScreen = ({ navigation }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (searchQuery || sortMethod) {
-      const filteredData = sort(transactions, sortMethod);
-      setFilteredTransactions(filteredData);
-    }
-  }, [transactions, searchQuery, sortMethod]);
+    let filteredData = [];
+    filteredData = sort(transactions, sortMethod);
 
-  const data = sortMethod === 'default' ? transactions : filteredTransactions;
+    if (searchQuery) {
+      const dataFound = searchData(filteredData, searchQuery);
+      filteredData = dataFound;
+    }
+
+    setFilteredTransactions(filteredData);
+  }, [transactions, searchQuery, sortMethod]);
 
   return (
     <SafeAreaView style={styles.appContainer}>
@@ -55,7 +59,7 @@ const HomeScreen = ({ navigation }) => {
         <FlatList
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
-          data={data}
+          data={filteredTransactions}
           renderItem={({ item }) => (
             <Card
               item={item}
