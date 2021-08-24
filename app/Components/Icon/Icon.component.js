@@ -2,12 +2,13 @@ import React from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
+import Color from '../../Constants/Colors';
 import styles from './Icon.styles';
 
 const CustomIcon = ({
   code,
   size = 15,
-  color = '#000000',
+  color = Color.black,
   customStyle = {}
 }) => {
   return (
