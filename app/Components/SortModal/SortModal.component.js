@@ -7,6 +7,7 @@ import RadioForm, {
 } from 'react-native-simple-radio-button';
 import { useSelector, useDispatch } from 'react-redux';
 
+import Color from '../../Constants/Colors';
 import { sort } from '../../Reducer/Sort.slice';
 import styles from './SortModal.styles';
 
@@ -29,8 +30,8 @@ const SortModal = ({ modalVisible, onBackDropPress }) => {
         isSelected={sortMethod === obj.value}
         onPress={() => dispatch(sort({ sortMethod: obj.value }))}
         borderWidth={1}
-        buttonInnerColor={'#50C900'}
-        buttonOuterColor={'#50C900'}
+        buttonInnerColor={Color.orange}
+        buttonOuterColor={Color.orange}
         buttonWrapStyle={styles.radioButton}
       />
       <RadioButtonLabel

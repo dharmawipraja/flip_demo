@@ -1,14 +1,15 @@
 import { StyleSheet } from 'react-native';
+import Color from '../../Constants/Colors';
 
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    backgroundColor: '#000000aa',
+    backgroundColor: Color.overlay,
     alignItems: 'center',
     justifyContent: 'center'
   },
   contentContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: Color.white,
     alignItems: 'flex-start',
     paddingLeft: 30,
     paddingTop: 30,

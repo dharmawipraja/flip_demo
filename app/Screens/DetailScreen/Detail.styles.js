@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Color from '../../Constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,7 +9,7 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
     padding: 25,
-    backgroundColor: 'white'
+    backgroundColor: Color.white
   },
   labelText: {
     fontSize: 18,
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
   },
   transactionDetailContainer: {
     padding: 25,
-    backgroundColor: 'white'
+    backgroundColor: Color.white
   },
   transactionDetailRow: {
     flexDirection: 'row',
@@ -44,12 +45,12 @@ const styles = StyleSheet.create({
     flex: 0.5
   },
   detailTransaksiButton: {
-    color: '#50C900',
+    color: Color.orange,
     fontSize: 18,
     marginLeft: 130
   },
   separator: {
-    borderBottomColor: '#d5d5d5',
+    borderBottomColor: Color.lightGray,
     borderBottomWidth: 1
   }
 });

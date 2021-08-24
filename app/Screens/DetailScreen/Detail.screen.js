@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import Icon from '../../Components/Icon/Icon.component';
+import Color from '../../Constants/Colors';
 import { transformDate } from '../../Utils/date.utils';
 import styles from './Detail.styles';
 
@@ -24,7 +25,7 @@ const _renderUserData = (title, subtitle) => (
 const _renderTransactionIdSection = (transactionId) => (
   <View style={styles.rowContainer}>
     <Text style={styles.labelText}>Transaction ID: #{transactionId}</Text>
-    <Icon code="clone" size={20} color={'#50C900'} />
+    <Icon code="clone" size={20} color={Color.orange} />
   </View>
 );
 

@@ -1,9 +1,11 @@
 import { StyleSheet } from 'react-native';
 
+import Color from '../../Constants/Colors';
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: Color.white,
     width: '100%',
     height: 50,
     borderRadius: 5,
@@ -19,8 +21,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginRight: 10
   },
-  sortContainer: { alignItems: 'flex-end', justifyContent: 'center' },
-  sortLabel: { fontSize: 16, color: 'orange' }
+  sortContainer: {
+    alignItems: 'flex-end',
+    justifyContent: 'center'
+  },
+  sortLabel: {
+    fontSize: 16,
+    color: Color.orange
+  }
 });
 
 export default styles;

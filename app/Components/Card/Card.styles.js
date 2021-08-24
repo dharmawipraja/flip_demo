@@ -1,10 +1,12 @@
 import { StyleSheet } from 'react-native';
 
+import Color from '../../Constants/Colors';
+
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: Color.white,
     marginTop: 10,
     borderRadius: 5,
     overflow: 'hidden',
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
   },
   colorStatus: (isPending) => ({
     flex: 0.03,
-    backgroundColor: isPending ? 'orange' : 'green'
+    backgroundColor: isPending ? Color.orange : Color.green
   }),
   title: {
     fontSize: 18,
@@ -35,13 +37,13 @@ const styles = StyleSheet.create({
   },
   statusText: (isPending) => ({
     fontSize: 14,
-    backgroundColor: isPending ? 'white' : 'green',
-    color: isPending ? 'black' : 'white',
+    backgroundColor: isPending ? Color.white : Color.green,
+    color: isPending ? Color.black : Color.white,
     fontWeight: 'bold',
     paddingVertical: 2,
     paddingHorizontal: 7,
     borderWidth: 2,
-    borderColor: isPending ? 'orange' : 'green',
+    borderColor: isPending ? Color.orange : Color.green,
     borderRadius: 5,
     overflow: 'hidden'
   }),
