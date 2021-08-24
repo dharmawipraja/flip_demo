@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import Icon from '../../Components/Icon/Icon.component';
 import Color from '../../Constants/Colors';
@@ -25,14 +26,20 @@ const _renderUserData = (title, subtitle) => (
 const _renderTransactionIdSection = (transactionId) => (
   <View style={styles.rowContainer}>
     <Text style={styles.labelText}>Transaction ID: #{transactionId}</Text>
-    <Icon code="clone" size={20} color={Color.orange} />
+    <TouchableOpacity onPress={() => Clipboard.setString(transactionId)}>
+      <Icon code="clone" size={20} color={Color.orange} />
+    </TouchableOpacity>
   </View>
 );
 
-const _renderDetailTransaksiSection = () => (
+const _renderDetailTransaksiSection = (showTransaction, setShowTransaction) => (
   <View style={styles.rowContainer}>
     <Text style={styles.labelText}>DETAIL TRANSAKSI</Text>
-    <Text style={styles.detailTransaksiButton}>Tutup</Text>
+    <TouchableOpacity onPress={() => setShowTransaction(!showTransaction)}>
+      <Text style={styles.detailTransaksiButton}>
+        {showTransaction ? 'Tutup' : 'Buka'}
+      </Text>
+    </TouchableOpacity>
   </View>
 );
 
@@ -69,6 +76,7 @@ const _renderTransactionDataSection = (transaction) => {
 };
 
 const DetailScreen = ({ route }) => {
+  const [showTransaction, setShowTransaction] = useState(true);
   const transactionId = route?.params?.transactionId;
   const transactionList = useSelector((state) => state.transactions.list);
   const transaction = transactionList.find((item) => item.id === transactionId);
@@ -77,9 +85,9 @@ const DetailScreen = ({ route }) => {
     <View style={styles.container}>
       {_renderTransactionIdSection(transactionId)}
       <View style={styles.separator} />
-      {_renderDetailTransaksiSection()}
+      {_renderDetailTransaksiSection(showTransaction, setShowTransaction)}
       <View style={styles.separator} />
-      {_renderTransactionDataSection(transaction)}
+      {showTransaction && _renderTransactionDataSection(transaction)}
     </View>
   );
 };
