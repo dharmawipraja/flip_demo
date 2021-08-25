@@ -34,10 +34,12 @@ const HomeScreen = ({ navigation }) => {
   const sortMethod = useSelector((state) => state.sort.sortMethod);
   const dispatch = useDispatch();
 
+  // Get data from Backend when component mount
   useEffect(() => {
     _fetchData(dispatch, setLoading);
   }, []);
 
+  // Filtering and sorting effects
   useEffect(() => {
     let filteredData = sort(transactions, sortMethod);
 

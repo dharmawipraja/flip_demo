@@ -11,6 +11,7 @@ import styles from './SearchBar.styles';
 const SearchBar = ({ sortButtonPress }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState('');
+  // Debounce on input text to prevent running the effects on every key input
   const debouncedQuery = useDebounce(query);
 
   useEffect(() => {

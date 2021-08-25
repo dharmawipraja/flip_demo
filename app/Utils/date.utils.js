@@ -13,6 +13,8 @@ const months = [
   'Desember'
 ];
 
+// Transform date function
+// e.g 2021-22-08 13:00:00 -> 8 Agustus 2021
 export const transformDate = (date) => {
   const splitDate = date.split(' ');
   const chunk = splitDate[0].split('-');

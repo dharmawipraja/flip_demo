@@ -1,3 +1,4 @@
+// Ascending sort based on field
 const sortAsc = (data, field) => {
   let arr = [...data];
   return arr.sort((a, b) => {
@@ -11,6 +12,7 @@ const sortAsc = (data, field) => {
   });
 };
 
+// Descending sort based on field
 const sortDesc = (data, field) => {
   let arr = [...data];
   return arr.sort((a, b) => {
@@ -24,6 +26,7 @@ const sortDesc = (data, field) => {
   });
 };
 
+// Sort data based on the sorting method function
 export const sort = (data, method) => {
   switch (method) {
     case 'sortByNameAsc':

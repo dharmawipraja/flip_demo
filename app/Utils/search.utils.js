@@ -1,7 +1,7 @@
+// Search for input in their ‘name’, ‘beneficiaryBank’, ‘senderBank’, or ‘amount’ fields
 export const searchData = (transactions, text) => {
   let result = [];
   transactions.filter((item) => {
-    // Look for objects with the received text in their ‘name’, ‘beneficiaryBank’, ‘senderBank’, or ‘amount’ fields
     const name = item.beneficiary_name.toLowerCase();
     const beneficiaryBank = item.beneficiary_bank.toLowerCase();
     const senderBank = item.sender_bank.toLowerCase();
