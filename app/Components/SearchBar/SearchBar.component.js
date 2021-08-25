@@ -22,6 +22,7 @@ const SearchBar = ({ sortButtonPress }) => {
     <View style={styles.container}>
       <Icon code="search" />
       <TextInput
+        underlineColorAndroid="transparent"
         placeholder="Cari nama, bank, atau nominal"
         style={styles.formField}
         placeholderTextColor={Color.gray}
